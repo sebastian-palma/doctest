@@ -20,7 +20,6 @@ jobs:
       with:
         repository: sebastian-palma/maindoc
         path: maindoc
-        token: ${{ secrets.PAT_FOR_PUSH }} 
 
     - name: Update changes
       run: |
