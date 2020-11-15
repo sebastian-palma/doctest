@@ -27,7 +27,7 @@ jobs:
 
       - run: |
              gem install yard
-             apt install wget unzip -y
+             sudo apt install wget unzip -y
              wget --no-check-certificate --content-disposition https://github.com/sebastian-palma/yard-template/archive/main.zip
              unzip -q yard-template-main.zip
              mv yard-template-main doctest/template
