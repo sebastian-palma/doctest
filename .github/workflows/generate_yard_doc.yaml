@@ -1,6 +1,6 @@
 name: Generate project YARD documentation
 
-on:•
+on:
   push:
     if: github.event.pull_request.merged == true
 
