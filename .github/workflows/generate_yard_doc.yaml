@@ -17,11 +17,6 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          repository: sebastian-palma/doctest
-          path: doctest
-
-      - uses: actions/checkout@v2
-        with:
           repository: sebastian-palma/maindoc
           path: maindoc
 
@@ -30,11 +25,9 @@ jobs:
              sudo apt install wget unzip -y
              wget --no-check-certificate --content-disposition https://github.com/sebastian-palma/yard-template/archive/main.zip
              unzip -q yard-template-main.zip
-             mv yard-template-main doctest/template
-             cd doctest/
+             mv yard-template-main template
              yardoc --protected --private -p template
-             cd ..
-             cp -avr doctest/doc/ maindoc/app/views/docs/yard/doctest/
+             cp -avr doc/ maindoc/app/views/docs/yard/doctest/
              rm -rf maindoc/app/views/docs/yard/doctest/js
              rm -rf maindoc/app/views/docs/yard/doctest/css
              cat maindoc/app/views/docs/yard/doctest/class_list.html
