@@ -20,7 +20,7 @@ jobs:
       with:
         repository: sebastian-palma/maindoc
         path: maindoc
-        token: ${{ secrets.PAT }} 
+        token: ${{ secrets.PAT_FOR_PUSH }} 
 
     - name: Update changes
       run: |
@@ -42,6 +42,6 @@ jobs:
              git commit -m "Update doctest YARD docs."
              git push https://$USERNAME:$REPO_KEY@github.com/maindoc.git $GITHUB_REF
       env:
-        REPO_KEY: ${{ secrets.PAT }}
+        REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
         USERNAME: github-actions
          
