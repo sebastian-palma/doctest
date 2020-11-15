@@ -8,6 +8,8 @@ jobs:
   build:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO_KEY: ${{ secrets.PAT }}
+      USERNAME: github-actions
     runs-on: ubuntu-latest
     steps:
       - uses: ruby/setup-ruby@v1.50.0
@@ -35,6 +37,7 @@ jobs:
              git config user.name github-actions
              git config user.email github-actions@github.com
              git status
-             git add .
+             git add -A
              git commit -m "Update doctest YARD docs."
              git push
+             git push https://$USERNAME:$REPO_KEY@github.com/maindoc.git $GITHUB_REF
