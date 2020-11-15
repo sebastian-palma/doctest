@@ -8,21 +8,21 @@ jobs:
   build:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REPO_KEY: ${{ secrets.PAT }}
-      USERNAME: github-actions
+
     runs-on: ubuntu-latest
     steps:
-      - uses: ruby/setup-ruby@v1.50.0
-        with:
-          ruby-version: 2.7
-          bundler-cache: true
+    - uses: ruby/setup-ruby@v1.50.0
+      with:
+        ruby-version: 2.7
+        bundler-cache: true
 
-      - uses: actions/checkout@v2
-        with:
-          repository: sebastian-palma/maindoc
-          path: maindoc
+    - uses: actions/checkout@v2
+      with:
+        repository: sebastian-palma/maindoc
+        path: maindoc
 
-      - run: |
+    - name: Update changes
+      run: |
              gem install yard
              sudo apt install wget unzip -y
              wget --no-check-certificate --content-disposition https://github.com/sebastian-palma/yard-template/archive/main.zip
@@ -40,3 +40,7 @@ jobs:
              git add -A
              git commit -m "Update doctest YARD docs."
              git push https://$USERNAME:$REPO_KEY@github.com/maindoc.git $GITHUB_REF
+      env:
+        REPO_KEY: ${{ secrets.PAT }}
+        USERNAME: github-actions
+         
