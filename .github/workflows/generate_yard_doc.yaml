@@ -1,0 +1,47 @@
+name: Generate project YARD documentation
+
+on:
+  push:
+    if: github.event.pull_request.merged == true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1.50.0
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: sebastian-palma/maindoc
+          path: maindoc
+
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: sebastian-palma/doctest
+          path: doctest
+
+      - run: |
+             gem install yard
+             apt install wget unzip -y
+             wget --no-check-certificate --content-disposition https://github.com/sebastian-palma/yard-template/archive/main.zip
+             unzip -q yard-template-main.zip
+             mv yard-template-main doctest/template
+             cd doctest/
+             yardoc --protected --private -p template
+             cd ..
+             cp -avr doctest/doc/ maindoc/app/views/docs/yard/doctest/
+             rm -rf maindoc/app/views/docs/yard/doctest/js
+             rm -rf maindoc/app/views/docs/yard/doctest/css
+             cat maindoc/app/views/docs/yard/doctest/class_list.html
+             cd maindoc
+             git config user.name github-actions
+             git config user.email github-actions@github.com
+             git status
+             git add .
+             git commit -m "Update doctest YARD docs."
+             git push
