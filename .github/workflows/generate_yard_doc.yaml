@@ -17,13 +17,13 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          repository: sebastian-palma/maindoc
-          path: maindoc
+          repository: sebastian-palma/doctest
+          path: doctest
 
       - uses: actions/checkout@v2
         with:
-          repository: sebastian-palma/doctest
-          path: doctest
+          repository: sebastian-palma/maindoc
+          path: maindoc
 
       - run: |
              gem install yard
