@@ -18,6 +18,7 @@ jobs:
 
     - uses: actions/checkout@v2
       with:
+        persist-credentials: false
         repository: sebastian-palma/maindoc
         path: maindoc
 
@@ -39,7 +40,7 @@ jobs:
              git status
              git add -A
              git commit -m "Update doctest YARD docs."
-             git push https://github.com/sebastian-palma/maindoc.git $GITHUB_REF
+             git push
       env:
         REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
         USERNAME: github-actions
