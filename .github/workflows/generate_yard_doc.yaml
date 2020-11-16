@@ -44,4 +44,3 @@ jobs:
              git push
       env:
         REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
-        USERNAME: github-actions
