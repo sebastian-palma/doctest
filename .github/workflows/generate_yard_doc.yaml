@@ -11,12 +11,14 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: ruby/setup-ruby@v1.50.0
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1.50.0
       with:
         ruby-version: 2.7
         bundler-cache: true
 
-    - uses: actions/checkout@v2
+    - name: Download Maindoc project
+      uses: actions/checkout@v2
       with:
         persist-credentials: false
         repository: sebastian-palma/maindoc
@@ -44,4 +46,3 @@ jobs:
       env:
         REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
         USERNAME: github-actions
-         
