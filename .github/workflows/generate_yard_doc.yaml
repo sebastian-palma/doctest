@@ -20,7 +20,7 @@ jobs:
     - name: Download Maindoc project
       uses: actions/checkout@v2
       with:
-        token: ${{ secrets.PAT_FOR_PUSH }}
+        token: ${{ secrets.PAT }}
         persist-credentials: false
         repository: sebastian-palma/maindoc
         path: maindoc
