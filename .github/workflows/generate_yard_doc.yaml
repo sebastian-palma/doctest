@@ -34,14 +34,13 @@ jobs:
              cp -avr doc/ maindoc/app/views/docs/yard/doctest/
              rm -rf maindoc/app/views/docs/yard/doctest/js
              rm -rf maindoc/app/views/docs/yard/doctest/css
-             cat maindoc/app/views/docs/yard/doctest/class_list.html
              cd maindoc
-             git config user.name github-actions
-             git config user.email github-actions@github.com
+             git config user.name "github-actions"
+             git config user.email "actions@github.com"
              git status
-             git add -A
-             git commit -m "Update doctest YARD docs."
+             git add --all
+             git commit -m "Update doctest YARD docs." -a
              git push https://$USERNAME:$REPO_KEY@github.com/sebastian-palma/maindoc.git
       env:
-        USERNAME: sebastian-palma
+        USERNAME: github-actions
         REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
