@@ -43,5 +43,5 @@ jobs:
              git commit -m "Update doctest YARD docs."
              git push https://$USERNAME:$REPO_KEY@github.com/sebastian-palma/maindoc.git
       env:
-        USERNAME: github-actions
+        USERNAME: sebastian-palma
         REPO_KEY: ${{ secrets.PAT_FOR_PUSH }}
