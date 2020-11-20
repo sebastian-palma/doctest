@@ -51,7 +51,7 @@ jobs:
           create-destination-directory: true
           empty-repository: false
           destination-github-username: sebastian-palma
-          destination-repository-directory: app/views/docs/jsdoc/doctest/
+          destination-repository-directory: app/views/docs/jsdoc/
           destination-repository-name: maindoc
           source-directory: doctest
           target-branch: main
