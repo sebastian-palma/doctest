@@ -37,10 +37,12 @@ jobs:
 
       - name: Generate Jsdoc documentation
         run: |
+          mv -av maindoc/ ..
+          mv -av docdash/ ..
           npm install -g jsdoc
-          jsdoc -r . -c ./.jsdoc.conf.json -t docdash
+          jsdoc -r . -c ./.jsdoc.conf.json -t ../docdash
           cd out/
-          rm -rf ../maindoc/app/views/docs/jsdoc/doctest/
+          rm -rf ../../maindoc/app/views/docs/jsdoc/doctest/
           mkdir -p $_
           cp -av $(ls | egrep -v "fonts|styles|scripts") $_
         env:
