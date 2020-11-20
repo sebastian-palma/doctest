@@ -39,10 +39,11 @@ jobs:
         run: |
           npm install -g jsdoc
           jsdoc -r . -c ./.jsdoc.conf.json -t docdash
-          cd out/
-          rm -rf ../maindoc/app/views/docs/jsdoc/doctest/
-          mkdir -p $_
-          cp -av $(ls | egrep -v "fonts|styles|scripts") $_
+          mv out/ app/views/docs/jsdoc/doctest/
+          # cd out/
+          # rm -rf ../maindoc/app/views/docs/jsdoc/doctest/
+          # mkdir -p $_
+          # cp -av $(ls | egrep -v "fonts|styles|scripts") $_
         env:
           USERNAME: github-actions
           REPO_KEY: ${{ secrets.PAT }}
@@ -52,7 +53,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT }}
         with:
-          source-directory: 'out'
+          source-directory: 'app/views/docs/jsdoc/doctest/'
           destination-github-username: 'sebastian-palma'
           destination-repository-name: 'maindoc'
           target-branch: main
