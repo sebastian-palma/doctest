@@ -38,7 +38,7 @@ jobs:
       - name: Generate Jsdoc documentation
         run: |
           npm install -g jsdoc
-          jsdoc -r . -c ./.jsdoc.conf.json -t docdash
+          jsdoc -r . -c ./.jsdoc.conf.json -t docdash -d doctest
         env:
           USERNAME: github-actions
           REPO_KEY: ${{ secrets.PAT }}
@@ -53,6 +53,6 @@ jobs:
           destination-github-username: sebastian-palma
           destination-repository-directory: app/views/docs/jsdoc/doctest/
           destination-repository-name: maindoc
-          source-directory: out
+          source-directory: doctest
           target-branch: main
           user-email: github-actions
