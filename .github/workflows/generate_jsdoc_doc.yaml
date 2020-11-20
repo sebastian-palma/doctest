@@ -51,7 +51,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          cd maindoc
+          cd ../maindoc
           git config user.name github-actions
           git config user.email actions@github.com
           git add -A
