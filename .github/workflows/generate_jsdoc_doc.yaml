@@ -39,8 +39,6 @@ jobs:
         run: |
           npm install -g jsdoc
           jsdoc -r . -c ./.jsdoc.conf.json -t docdash
-          mkdir -p app/views/docs/jsdoc/doctest/
-          mv out/ app/views/docs/jsdoc/doctest/
         env:
           USERNAME: github-actions
           REPO_KEY: ${{ secrets.PAT }}
