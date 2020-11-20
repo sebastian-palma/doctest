@@ -21,6 +21,7 @@ require("channels")
  * @constructor
  * @param {string} title - The title of the book.
  * @param {string} author - The author of the book.
+ * @param {object} coolObject - The author of the book.
  */
-function Book(title, author) {
+function Book(title, author, coolObject) {
 }
