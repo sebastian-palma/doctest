@@ -55,4 +55,5 @@ jobs:
           source-directory: 'out'
           destination-github-username: 'sebastian-palma'
           destination-repository-name: 'maindoc'
+          target-branch: main
           user-email: github-actions
