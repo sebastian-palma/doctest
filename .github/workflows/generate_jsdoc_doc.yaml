@@ -48,10 +48,11 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT }}
         with:
-          destination-repository-directory: 'app/views/docs/jsdoc/doctest/'
-          source-directory: 'out'
           create-destination-directory: true
-          destination-github-username: 'sebastian-palma'
-          destination-repository-name: 'maindoc'
+          empty-repository: false
+          destination-github-username: sebastian-palma
+          destination-repository-directory: app/views/docs/jsdoc/doctest/
+          destination-repository-name: maindoc
+          source-directory: out
           target-branch: main
           user-email: github-actions
