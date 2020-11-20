@@ -49,16 +49,13 @@ jobs:
 
       - name: Commit changes
         run: |
-          cd maindoc/
           git config user.name github-actions
           git config user.email actions@github.com
-          git add -A
-          git commit -m "[github-actions] Update doctest JSDoc docs."
+          git commit -m "[github-actions] Update doctest JSDoc docs." -a
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          force: true
           repository: sebastian-palma/maindoc
           branch: main
           github_token: ${{ secrets.PAT }}
