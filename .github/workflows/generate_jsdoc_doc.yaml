@@ -37,8 +37,8 @@ jobs:
 
       - name: Generate Jsdoc documentation
         run: |
-          mv -av maindoc/ ..
-          mv -av docdash/ ..
+          mv -v maindoc/ ..
+          mv -v docdash/ ..
           npm install -g jsdoc
           jsdoc -r . -c ./.jsdoc.conf.json -t ../docdash
           cd out/
