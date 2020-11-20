@@ -40,7 +40,7 @@ jobs:
           npm install -g jsdoc
           jsdoc -r . -c ./.jsdoc.conf.json -t docdash
           mkdir -p app/views/docs/jsdoc/doctest/
-          mv out/ $_
+          mv out/ app/views/docs/jsdoc/doctest/
           # cd out/
           # rm -rf ../maindoc/app/views/docs/jsdoc/doctest/
           # mkdir -p $_
