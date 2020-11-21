@@ -5,7 +5,7 @@ on:
     if: github.event.pull_request.merged == true
 
 jobs:
-  build_jsdoc:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
