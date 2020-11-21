@@ -2,7 +2,8 @@ name: Generate and push project documentation
 
 on:
   push:
-    if: github.event.pull_request.merged == true
+    branches:
+      - master
 
 jobs:
   build:
