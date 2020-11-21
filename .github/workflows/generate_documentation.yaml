@@ -8,6 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.52.0
         with:
@@ -41,10 +46,8 @@ jobs:
           path: yard-template
           token: ${{ secrets.PAT }}
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Generate JSDoc/YARD documentation
+        uses: mxschmitt/action-tmate@v3
         run: |
           npm install -g jsdoc && gem install yard
           jsdoc -r . -c .jsdoc.conf.json -t docdash
