@@ -29,14 +29,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: sebastian-palma/maindoc
-          path: maindoc
           token: ${{ secrets.PAT }}
 
       - name: Download JSDoc template
         uses: actions/checkout@v2
         with:
           repository: sebastian-palma/docdash
-          path: docdash
           token: ${{ secrets.PAT }}
           ref: ft/maindoc/init
 
@@ -44,8 +42,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: sebastian-palma/yard-template
-          path: yard-template
           token: ${{ secrets.PAT }}
+
+      - name: Debugging with tmate
+        uses: mxschmitt/action-tmate@v3.1
 
       - name: Clean destination directories
         run: rm -rf maindoc/app/views/docs/jsdoc/doctest/ && rm -rf maindoc/app/views/docs/yard/doctest/
