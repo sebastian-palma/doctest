@@ -44,7 +44,7 @@ jobs:
       - name: Generate JSDoc/YARD documentation
         run: |
           npm install -g jsdoc && gem install yard
-          jsdoc -r . -c ./.jsdoc.conf.json -t docdash
+          jsdoc -r . -c .jsdoc.conf.json -t docdash
           yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
           cp out maindoc/app/views/docs/jsdoc/doctest && cp doc maindoc/app/views/docs/yard/doctest
 
