@@ -41,6 +41,9 @@ jobs:
           path: yard-template
           token: ${{ secrets.PAT }}
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Generate JSDoc/YARD documentation
         run: |
           npm install -g jsdoc && gem install yard
