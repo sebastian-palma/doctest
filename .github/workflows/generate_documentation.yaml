@@ -1,0 +1,66 @@
+name: Generate and push project documentation
+
+on:
+  push:
+    if: github.event.pull_request.merged == true
+
+jobs:
+  build_jsdoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.50.0
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 12
+
+      - name: Download Maindoc project
+        uses: actions/checkout@v2
+        with:
+          repository: sebastian-palma/maindoc
+          path: maindoc
+          token: ${{ secrets.PAT }}
+
+      - name: Download JSDoc template
+        uses: actions/checkout@v2
+        with:
+          repository: sebastian-palma/docdash
+          path: docdash
+          token: ${{ secrets.PAT }}
+          ref: ft/maindoc/init
+
+      - name: Download YARD template
+        uses: actions/checkout@v2
+        with:
+          repository: sebastian-palma/yard-template/
+          path: yard-template
+          token: ${{ secrets.PAT }}
+
+      - name: Generate JSDoc/YARD documentation
+        run: |
+          npm install -g jsdoc && gem install yard
+          jsdoc -r . -c ./.jsdoc.conf.json -t docdash
+          yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
+          cp out maindoc/app/views/docs/jsdoc/doctest && cp doc maindoc/app/views/docs/yard/doctest
+
+      - name: Configure GIT
+        run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
+
+      - name: Push JSDoc/YARD documentation
+        run: |
+          git commit -m "Update JSDoc/YARD documentation." -a
+          git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
+        env:
+          REPO_KEY: ${{ secrets.PAT }}
