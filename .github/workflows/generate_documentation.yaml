@@ -37,7 +37,7 @@ jobs:
       - name: Download YARD template
         uses: actions/checkout@v2
         with:
-          repository: sebastian-palma/yard-template/
+          repository: sebastian-palma/yard-template
           path: yard-template
           token: ${{ secrets.PAT }}
 
