@@ -61,14 +61,11 @@ jobs:
       - name: Move generated files
         run: cp -r out/ maindoc/app/views/docs/jsdoc/doctest/ && cp -r doc/ maindoc/app/views/docs/yard/doctest/
 
-      - name: Configure GIT
-        run: |
-          git config user.name github-actions
-          git config user.email actions@github.com
-
       - name: Push JSDoc/YARD documentation
         run: |
           cd maindoc
+          git config user.name github-actions
+          git config user.email actions@github.com
           git commit -m "Update JSDoc/YARD documentation." -a
           git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
         env:
