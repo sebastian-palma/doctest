@@ -47,9 +47,6 @@ jobs:
           path: yard-template
           token: ${{ secrets.PAT }}
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Clean destination directories
         run: rm -rf maindoc/app/views/docs/jsdoc/doctest/ && rm -rf maindoc/app/views/docs/yard/doctest/
 
