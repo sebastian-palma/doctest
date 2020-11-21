@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 12
 
+      # `with` options must be set after Ruby (at least)
       - uses: actions/checkout@master
         with:
           persist-credentials: false
@@ -49,12 +50,19 @@ jobs:
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
+      - name: Clean destination directories
+        run: rm -rf maindoc/app/views/docs/jsdoc/doctest/ && rm -rf maindoc/app/views/docs/yard/doctest/
+
+      - name: Install documentation libraries
+        run: npm install -g jsdoc && gem install yard
+
       - name: Generate JSDoc/YARD documentation
         run: |
-          npm install -g jsdoc && gem install yard
           jsdoc -r . -c .jsdoc.conf.json -t docdash
           yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
-          cp out maindoc/app/views/docs/jsdoc/doctest && cp doc maindoc/app/views/docs/yard/doctest
+
+      - name: Move generated files
+        run: cp -r out/ maindoc/app/views/docs/jsdoc/doctest/ && cp -r doc/ maindoc/app/views/docs/yard/doctest/
 
       - name: Configure GIT
         run: |
@@ -63,6 +71,7 @@ jobs:
 
       - name: Push JSDoc/YARD documentation
         run: |
+          cd maindoc
           git commit -m "Update JSDoc/YARD documentation." -a
           git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
         env:
