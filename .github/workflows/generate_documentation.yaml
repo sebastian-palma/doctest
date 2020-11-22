@@ -55,10 +55,11 @@ jobs:
       - name: Install documentation libraries
         run: npm install -g jsdoc && gem install yard
 
-      - name: Generate JSDoc/YARD documentation
-        run: |
-          jsdoc -r . -c .jsdoc.conf.json -t docdash
-          yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
+      - name: Generate JSDoc documentation
+        run: jsdoc -r . -c .jsdoc.conf.json -t docdash
+
+      - name: Generate YARD documentation
+        run: yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
 
       - name: Move generated files
         run: cp -r out/ maindoc/app/views/docs/jsdoc/doctest/ && cp -r doc/ maindoc/app/views/docs/yard/doctest/
@@ -68,7 +69,8 @@ jobs:
           cd maindoc
           git config user.name github-actions
           git config user.email actions@github.com
-          git commit -m "Update JSDoc/YARD documentation." -a
+          git add --all
+          git commit -m "Update JSDoc/YARD documentation."
           git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
         env:
           REPO_KEY: ${{ secrets.PAT }}
