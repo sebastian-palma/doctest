@@ -2,7 +2,7 @@
   "source": {
     "include": ["."],
     "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "node_modules|maindoc|docdash"
+    "excludePattern": "node_modules|maindoc|docdash|public"
   },
   "docdash": {
     "search": true,

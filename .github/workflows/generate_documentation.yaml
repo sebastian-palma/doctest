@@ -1,13 +1,11 @@
 name: Generate and push project documentation
 
 on:
-  push:
-    branches:
-      - master
+  repository_dispatch:
+    types: [update_docs-command]
 
 jobs:
   build:
-    if: "!contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     runs-on: ubuntu-latest
     steps:
       - name: Setup Ruby
@@ -59,7 +57,12 @@ jobs:
         run: jsdoc -r . -c .jsdoc.conf.json -t docdash
 
       - name: Generate YARD documentation
-        run: yardoc --no-cache --no-save --protected --private app/controllers/**/*.rb app/helpers/**/*.rb app/jobs/**/*.rb app/mailers/**/*.rb app/models/**/*.rb app/services/**/*.rb -p yard-template
+        run: yardoc --no-cache --no-save --protected --private -p yard-template app/controllers/**/*.rb \
+                                                                                app/helpers/**/*.rb     \
+                                                                                app/jobs/**/*.rb        \
+                                                                                app/mailers/**/*.rb     \
+                                                                                app/models/**/*.rb      \
+                                                                                app/services/**/*.rb
 
       - name: Move generated files
         run: cp -r out/ maindoc/app/views/docs/jsdoc/doctest/ && cp -r doc/ maindoc/app/views/docs/yard/doctest/
