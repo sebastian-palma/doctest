@@ -57,8 +57,8 @@ jobs:
 
       - name: Clean destination directories
         run: |
-          rm -rf maindoc/app/views/docs/jsdoc/doctest/
-          rm -rf maindoc/app/views/docs/yard/doctest/
+          rm -rf maindoc/app/views/docs/jsdoc/${REPOSITORY_NAME}/
+          rm -rf maindoc/app/views/docs/yard/${REPOSITORY_NAME}/
 
       - name: Install documentation libraries
         run: |
@@ -76,23 +76,20 @@ jobs:
                                                                                 app/models/**/*.rb      \
                                                                                 app/services/**/*.rb
 
-      - name: Debugging with tmate
-        uses: mxschmitt/action-tmate@v3.1
-
-      - name: Move generated files
+      - name: Move documentation files to wrapper application
         run: |
-          cp -r out/ maindoc/app/views/docs/jsdoc/doctest/
-          cp -r doc/ maindoc/app/views/docs/yard/doctest/
-          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/ui/specs/doctest.json
-          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/editor/specs/doctest.json
+          cp -r out/ maindoc/app/views/docs/jsdoc/${REPOSITORY_NAME}/
+          cp -r doc/ maindoc/app/views/docs/yard/${REPOSITORY_NAME}/
+          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/ui/specs/${REPOSITORY_NAME}.json
+          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/editor/specs/${REPOSITORY_NAME}.json
 
-      - name: Push JSDoc/YARD documentation
+      - name: Push documentation changes
         run: |
           cd maindoc
           git config user.name github-actions
           git config user.email actions@github.com
           git add --all
-          git commit -m "Update project documentation."
+          git commit -m "Update ${REPOSITORY_NAME} documentation."
           git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
         env:
           REPO_KEY: ${{ secrets.PAT }}
