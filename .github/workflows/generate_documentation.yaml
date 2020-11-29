@@ -68,6 +68,9 @@ jobs:
                                                                                 app/models/**/*.rb      \
                                                                                 app/services/**/*.rb
 
+      - name: Debugging with tmate
+        uses: mxschmitt/action-tmate@v3.1
+
       - name: Move generated files
         run: |
           cp -r out/ maindoc/app/views/docs/jsdoc/doctest/
