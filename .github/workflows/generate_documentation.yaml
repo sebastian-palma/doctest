@@ -1,10 +1,8 @@
 name: Generate and push project documentation
 
 env:
+  REF: ${{ github.event.pull_request.head.sha }}
   APP_NAME: ${{ github.event.repository.name }}
-  PR: ${{ github.event_name == 'repository_dispatch' }}
-  PR_NUMBER: ${{ github.event.client_payload.pull_request.number }}
-  RELEASE_NAME: ${APP_NAME}${PR_NUMBER:+-pr-$PR_NUMBER}
 
 on:
   repository_dispatch:
@@ -14,12 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set environment variables
-        run: |
-          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
-          echo "SHORT_SHA=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
-          echo "APP_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')" >> $GITHUB_ENV
-          echo "REPO_NAME=$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.52.0
