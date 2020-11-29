@@ -1,10 +1,7 @@
 name: Generate and push project documentation
 
 env:
-  PAYLOAD_CONTEXT: ${{ toJson(github.event.client_payload) }}
-  REF: ${{ github.event.pull_request.head.sha }}
   CURRENT_BRANCH: ${{ github.event.client_payload.pull_request.head.ref }}
-  APP_NAME: ${{ github.event.repository.name }}
 
 on:
   repository_dispatch:
@@ -31,6 +28,9 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      
+      - name: Change dir to current branch
+        run: git checkout $CURRENT_BRANCH
 
       - name: Download Maindoc project
         uses: actions/checkout@v2
