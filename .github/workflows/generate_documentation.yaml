@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-          
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.52.0
         with:
@@ -29,7 +29,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      
+
       - name: Change dir to current branch
         run: git checkout $CURRENT_BRANCH
 
