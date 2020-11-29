@@ -1,6 +1,7 @@
 name: Generate and push project documentation
 
 env:
+  PAYLOAD_CONTEXT: ${{ toJson(github.event.client_payload) }}
   REF: ${{ github.event.pull_request.head.sha }}
   APP_NAME: ${{ github.event.repository.name }}
 
@@ -29,14 +30,12 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download Maindoc project
         uses: actions/checkout@v2
         with:
           repository: sebastian-palma/maindoc
           path: maindoc
-          ref: main
           token: ${{ secrets.PAT }}
 
       - name: Download JSDoc template
@@ -52,7 +51,6 @@ jobs:
         with:
           repository: sebastian-palma/yard-template
           path: yard-template
-          ref: master
           token: ${{ secrets.PAT }}
 
       - name: Clean destination directories
