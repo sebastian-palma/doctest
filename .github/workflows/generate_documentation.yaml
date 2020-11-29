@@ -48,10 +48,14 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - name: Clean destination directories
-        run: rm -rf maindoc/app/views/docs/jsdoc/doctest/ && rm -rf maindoc/app/views/docs/yard/doctest/
+        run: |
+          rm -rf maindoc/app/views/docs/jsdoc/doctest/
+          rm -rf maindoc/app/views/docs/yard/doctest/
 
       - name: Install documentation libraries
-        run: npm install -g jsdoc && gem install yard
+        run: |
+          npm install -g jsdoc
+          gem install yard
 
       - name: Generate JSDoc documentation
         run: jsdoc -r . -c .jsdoc.conf.json -t docdash
@@ -65,7 +69,11 @@ jobs:
                                                                                 app/services/**/*.rb
 
       - name: Move generated files
-        run: cp -r out/ maindoc/app/views/docs/jsdoc/doctest/ && cp -r doc/ maindoc/app/views/docs/yard/doctest/
+        run: |
+          cp -r out/ maindoc/app/views/docs/jsdoc/doctest/
+          cp -r doc/ maindoc/app/views/docs/yard/doctest/
+          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/ui/specs/doctest.json
+          cp rspec_api_documentation/open_api.json maindoc/app/javascript/packs/swagger/editor/specs/doctest.json
 
       - name: Push JSDoc/YARD documentation
         run: |
@@ -73,7 +81,7 @@ jobs:
           git config user.name github-actions
           git config user.email actions@github.com
           git add --all
-          git commit -m "Update JSDoc/YARD documentation."
+          git commit -m "Update project documentation."
           git push https://github-actions:$REPO_KEY@github.com/sebastian-palma/maindoc.git
         env:
           REPO_KEY: ${{ secrets.PAT }}
